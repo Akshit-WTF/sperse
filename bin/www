@@ -4,22 +4,17 @@
  * Module dependencies.
  */
 require('dotenv').config();
-const fs = require('fs');
 const app = require('../app');
 const http = require('http');
-const https = require("https");
-const path = require("path");
 
 /**
  * Create HTTP server.
  */
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer({key: fs.readFileSync(path.join(__dirname, '../private.key')), cert: fs.readFileSync(path.join(__dirname, '../certificate.crt'))}, app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 httpServer.listen(80);
-httpsServer.listen(443);
