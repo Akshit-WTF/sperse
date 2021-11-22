@@ -8,20 +8,14 @@ const fs = require('fs');
 const app = require('../app');
 const http = require('http');
 const https = require("https");
-
-/**
- * Get port from environment and store in Express.
- */
-
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const path = require("path");
 
 /**
  * Create HTTP server.
  */
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer({key: fs.readFileSync('./ssl/48380791_127.0.0.1.key'), cert: fs.readFileSync('./ssl/48380791_127.0.0.1.cert')}, app);
+const httpsServer = https.createServer({key: fs.readFileSync(path.join(__dirname, '../private.key')), cert: fs.readFileSync(path.join(__dirname, '../certificate.crt'))}, app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -29,19 +23,3 @@ const httpsServer = https.createServer({key: fs.readFileSync('./ssl/48380791_127
 
 httpServer.listen(80);
 httpsServer.listen(443);
-
-function normalizePort(val) {
-    const port = parseInt(val, 10);
-
-    if (isNaN(port)) {
-        // named pipe
-        return val;
-    }
-
-    if (port >= 0) {
-        // port number
-        return port;
-    }
-
-    return false;
-}

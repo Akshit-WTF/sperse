@@ -28,6 +28,7 @@ app.use('/', proxy(getHost, {
         return updatedPath + (queryString ? '?' + queryString : '');
     },
     proxyErrorHandler: function (err, res, next) {
+        // Terrible error handling at it's best! :)
         if (err.toString() === "TypeError: Cannot read property 'request' of undefined") {
             return next(createError(400, 'The website you are trying to reach does not exist on this Sperse.'));
         }
