@@ -22,11 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.route('/add')
     .get((req, res, next) => {
-        if (req.headers.host !== 'domains.akshit.xyz') next();
+        if (req.headers.host !== 'domains.akshit.live') return next();
         res.render('index');
     })
     .post((req, res, next) => {
-        if (req.headers.host !== 'domains.akshit.xyz') next();
+        if (req.headers.host !== 'domains.akshit.live') return next();
         if (!req.body.host || !req.body.address) return next(createError(400, 'Missing host or address!'));
         if (!!db.get(req.body.host).value()) return next(createError(403, 'This host already has a host attached. Please contact staff.'));
         db.set(req.body.host, req.body.address).write();
